@@ -1,4 +1,4 @@
 MandelbrotSet-CUDA
 ==================
 
-Mandelbrot Set implemented with Nvidia CUDA
+Mandelbrot Set calculator using Nvidia CUDA
