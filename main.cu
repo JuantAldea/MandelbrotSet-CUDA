@@ -48,16 +48,13 @@ __global__ void render(unsigned char *out, int width, int height, int max_iterat
         x = xtemp;
         iteration++;
     }
-    //out[index]++;
-    if (iteration == max_iterations) {
-        out[index + 0] = 0;
-        out[index + 1] = 0;
-        out[index + 2] = 0;
-    } else {
-        out[index + 0] = iteration < 255 ? iteration : 255;
-        out[index + 1] = iteration < 255 ? iteration : 255;
-        out[index + 2] = iteration < 255 ? iteration : 255;
-    }
+
+    const int iteration_less_255 = iteration < 255;
+    const int iteration_not_equal_max_iterations = iteration !=  max_iterations;
+
+    out[index + 0] = iteration_not_equal_max_iterations * (iteration_less_255 * iteration + !iteration_less_255 * 255);
+    out[index + 1] = iteration_not_equal_max_iterations * (iteration_less_255 * iteration + !iteration_less_255 * 255);
+    out[index + 2] = iteration_not_equal_max_iterations * (iteration_less_255 * iteration + !iteration_less_255 * 255);
 }
 
 void runCUDA(int width, int height, int max_iterations) {
